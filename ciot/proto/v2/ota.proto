@@ -26,6 +26,11 @@ enum OtaState {
   OTA_STATE_ERROR = 10;                // OTA process encountered an error.
 }
 
+enum OtaCmd {
+  OTA_CMD_NONE = 0;                // No command.
+  OTA_CMD_ROLLBACK = 1;            // Rollback command.
+}
+
 // Ota stop message
 message OtaStop {}
 
@@ -33,7 +38,6 @@ message OtaStop {}
 message OtaCfg {
   string url = 1;                       // URL for the OTA update.
   bool force = 2;                       // Force OTA update.
-  bool encrypted = 3;                   // Encrypted OTA update.
   bool restart = 4;                     // Restart device after OTA update.
   OtaType type = 5;                     // OTA type
 }
@@ -47,7 +51,11 @@ message OtaStatus {
 }
 
 // Message representing an OTA request.
-message OtaReq {}
+message OtaReq {
+  oneof type {
+    OtaCmd cmd = 1;          // OTA command.
+  }
+}
 
 // Message representing data for the OTA process.
 message OtaData {
