@@ -16,7 +16,7 @@ enum WifiType {
 enum WifiScanState {
   WIFI_SCAN_STATE_IDLE = 0;     // Wi-Fi scan is idle.
   WIFI_SCAN_STATE_SCANNING = 1; // Wi-Fi scan is in progress.
-  WIFI_SCAN_STATE_SCANNED = 2;  // Wi-Fi scan completed successfully.
+  WIFI_SCAN_STATE_DONE = 2;     // Wi-Fi scan completed successfully.
   WIFI_SCAN_STATE_ERROR = 3;    // Error occurred during Wi-Fi scan.
 }
 
@@ -68,17 +68,10 @@ message WifiReqGetAp {
 // Message representing a Wi-Fi request.
 message WifiReq {
   oneof type {
-    WifiReqScan scan = 1; // Start wifi scanner
-    WifiReqGetAp get_ap =
-        2; // Get acess point information from wifi scanner queue
-  }
-}
-
-// Message representing a Wi-Fi response.
-message WifiResp {
-  oneof type {
-    WifiReqScanResult scan = 1; // Wifi scanner result
-    WifiApInfo get_ap = 2;      // Get acess point result
+    WifiReqScan scan = 1;              // Start wifi scanner
+    WifiReqScanResult scan_result = 2; // Wifi scanner result
+    WifiReqGetAp get_ap = 3; // Get acess point information from wifi scanner queue
+    WifiApInfo ap_info = 4;      // Get acess point result
   }
 }
 
@@ -89,7 +82,6 @@ message WifiData {
     WifiCfg config = 2;    // Configuration for the Wi-Fi interface.
     WifiStatus status = 3; // Status of the Wi-Fi interface.
     WifiReq request = 4;   // Wi-Fi request data.
-    WifiResp response = 5; // Wi-Fi response data.
-    WifiInfo info = 6;     // TCP information.
+    WifiInfo info = 5;     // TCP information.
   }
 }
