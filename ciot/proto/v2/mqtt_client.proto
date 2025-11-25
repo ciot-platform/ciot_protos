@@ -45,20 +45,34 @@ message MqttClientTopicsCfg {
   string sub = 2; // Topic used to receive data.
 }
 
+message MqttClientLastWill {
+  string topic = 1;  // Topic for the last will message.
+  bytes payload = 2; // Payload for the last will message.
+  uint32 qos = 3;    // Quality of Service level for the last will message.
+  bool retain = 4;   // Retain flag for the last will message.
+}
+
 // Message used to stop MQTT client interface
 message MqttClientStop {
 
 }
 
+message MqttClientSessionCfg {
+  bool clean_session = 1; // Clean session flag
+  int32 keep_alive = 2;    // Keep alive interval in seconds
+}
+
 // Message representing configuration for the MQTT client.
 message MqttClientCfg {
-  string client_id = 1;                 // Client ID for MQTT connection.
-  string url = 2;                       // URL for MQTT connection.
-  string user = 3;                      // Username for MQTT authentication.
-  string password = 4;                  // Password for MQTT authentication.
-  uint32 qos = 5;                       // Quality of Service level for MQTT communication.
-  MqttClientTopicsCfg topics = 6;       // Topics configuration for MQTT communication.
-  MqttClientBrokerKind broker_kind = 7; // MQTT broker kind
+  string client_id = 1;                       // Client ID for MQTT connection.
+  string url = 2;                             // URL for MQTT connection.
+  string user = 3;                            // Username for MQTT authentication.
+  string password = 4;                        // Password for MQTT authentication.
+  uint32 qos = 5;                             // Quality of Service level for MQTT communication.
+  MqttClientTopicsCfg topics = 6;             // Topics configuration for MQTT communication.
+  MqttClientBrokerKind broker_kind = 7;       // MQTT broker kind.
+  optional MqttClientLastWill last_will = 8;  // Last will message configuration.
+  optional MqttClientSessionCfg session = 9;  // Session configuration.
 }
 
 // Message representing status information for the MQTT client.
