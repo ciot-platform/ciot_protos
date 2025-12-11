@@ -13,7 +13,7 @@ enum EventType {
   EVENT_TYPE_STARTED = 2;       // Event interface started
   EVENT_TYPE_STOPPED = 3;       // Event interface stopped
   EVENT_TYPE_ERROR = 4;         // Event error
-  EVENT_TYPE_REQUEST = 5;       // Event request
+  EVENT_TYPE_MSG = 5;           // Event message
   EVENT_TYPE_DONE = 6;          // Event request done
   EVENT_TYPE_STATE_CHANGED = 7; // Event interface state changed
   EVENT_TYPE_INTERNAL = 8;      // Event internal
