@@ -21,8 +21,9 @@ enum ProxyState {
 }
 
 message Proxy {
-  IfaceInfo iface = 1; // Proxy interface information.
-  ProxyState state = 2;    // Proxy state.
+  IfaceInfo iface = 1;   // Proxy interface information.
+  ProxyState state = 2;  // Proxy state.
+  bool save = 3;         // Use ciot to save msg data
 }
 
 // Represents an CioT message
