@@ -20,11 +20,17 @@ enum EventType {
   EVENT_TYPE_CUSTOM = 9;        // Event custom
 }
 
+message EventInternal {
+  int32 type = 1; // Internal event type
+  bytes data = 2; // Internal event data
+}
+
 // Message representing an CIoT event
 message Event {
   EventType type = 1; // Event type
   oneof data {
-    Msg msg = 2;   // Event message
-    bytes raw = 3; // Event raw data
+    Msg msg = 2;                  // Event message
+    bytes raw = 3;                // Event raw data
+    EventInternal internal = 4;   // Event internal
   }
 }
