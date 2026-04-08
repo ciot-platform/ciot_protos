@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package Ciot;
 
+import "ciot/proto/v2/errors.proto";
 import "ciot/proto/v2/mbus.proto";
 import "ciot/proto/v2/uart.proto";
 
@@ -42,6 +43,11 @@ message MbusServerCfg {
 // Message representing Modbus server status.
 message MbusServerStatus {
   MbusServerState state = 1; // State of the Modbus server.
+  Err error = 2;             // Last error code of the Modbus server.
+  uint64 last_pool = 3;      // Timestamp of the last pool in milliseconds since epoch.
+  uint64 last_update = 4;    // Timestamp of the last update in milliseconds since epoch.
+  uint64 last_request = 5;   // Timestamp of the last request in milliseconds since epoch.
+  uint32 request_count = 6;  // Total number of requests handled by the Modbus server.
 }
 
 // Message representing an Modbus server request.
