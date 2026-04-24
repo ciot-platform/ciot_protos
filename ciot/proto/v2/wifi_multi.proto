@@ -36,8 +36,9 @@ message WifiMultiStatus {
   uint32 active_index = 1; // Index of currently active network (-1 if none)
   uint32 valid_count = 2; // Number of valid networks available
   uint32 last_error = 3; // Last global error code
-  repeated WifiMultiItemStatus items = 4; // Status of each network item
-  Ciot.TcpStatus tcp = 5; // Status of the underlying TCP connection
+  uint64 next_switch_ms = 4; // Timestamp for next scheduled switch attempt
+  repeated WifiMultiItemStatus items = 5; // Status of each network item
+  Ciot.TcpStatus tcp = 6; // Status of the underlying TCP connection
 }
 
 // Runtime information for multi-Wi-Fi, including active network details
