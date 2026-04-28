@@ -39,6 +39,7 @@ message WifiMultiStatus {
   uint64 next_switch_s = 4; // Timestamp for next scheduled switch attempt (seconds)
   repeated WifiMultiItemStatus items = 5; // Status of each network item
   Ciot.TcpStatus tcp = 6; // Status of the underlying TCP connection
+  bool started = 7; // Whether multi-Wi-Fi orchestrator is started
 }
 
 // Runtime information for multi-Wi-Fi, including active network details
