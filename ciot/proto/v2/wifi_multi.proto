@@ -96,7 +96,7 @@ message WifiMultiStop {}
 message WifiMultiData {
   oneof type {
     WifiMultiStop stop = 1; // Stop multi-Wi-Fi orchestrator
-    WifiMultiCfg config = 2; // Configuration for multi-Wi-Fi
+    WifiMultiCfg config = 2; // Full configuration written in RAM before start
     WifiMultiStatus status = 3; // Status of multi-Wi-Fi orchestrator
     WifiMultiReq request = 4; // Request to multi-Wi-Fi orchestrator
     WifiMultiInfo info = 5; // Information about active network
