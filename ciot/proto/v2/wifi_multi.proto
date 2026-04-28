@@ -18,7 +18,7 @@ message WifiMultiItemCfg {
 message WifiMultiCfg {
   repeated WifiMultiItemCfg items = 1; // List of Wi-Fi networks to cycle through
   uint32 initial_index = 2; // Index of the network to try first
-  uint32 switch_interval_ms = 3; // Interval in milliseconds for periodic network rotation
+  uint32 switch_interval_s = 3; // Interval in seconds for periodic network rotation
   uint32 reconnect_attempts = 4; // Number of reconnection attempts per network
 }
 
@@ -36,7 +36,7 @@ message WifiMultiStatus {
   uint32 active_index = 1; // Index of currently active network (-1 if none)
   uint32 valid_count = 2; // Number of valid networks available
   uint32 last_error = 3; // Last global error code
-  uint64 next_switch_ms = 4; // Timestamp for next scheduled switch attempt
+  uint64 next_switch_s = 4; // Timestamp for next scheduled switch attempt (seconds)
   repeated WifiMultiItemStatus items = 5; // Status of each network item
   Ciot.TcpStatus tcp = 6; // Status of the underlying TCP connection
 }
@@ -71,6 +71,12 @@ message WifiMultiReqGetItem {
   uint32 index = 1; // Index of the item to retrieve
 }
 
+// Request to set configuration for a specific network index in RAM only
+message WifiMultiReqSetItem {
+  uint32 index = 1; // Index of the item to configure
+  WifiMultiItemCfg config = 2; // Network configuration for the index
+}
+
 // Request information for multi-Wi-Fi operations
 message WifiMultiReq {
   oneof type {
@@ -79,6 +85,7 @@ message WifiMultiReq {
     WifiMultiReqMarkActiveInvalid mark_active_invalid = 3; // Mark active as invalid
     WifiMultiReqResetInvalid reset_invalid = 4; // Reset invalidity flags
     WifiMultiReqGetItem get_item = 5; // Get item information
+    WifiMultiReqSetItem set_item = 6; // Set item configuration in RAM only
   }
 }
 
