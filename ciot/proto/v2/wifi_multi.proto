@@ -28,7 +28,7 @@ message WifiMultiItemStatus {
   bool selected = 2; // Whether this item is currently selected/active
   uint32 last_error = 3; // Last error code from this network
   uint32 fail_count = 4; // Number of consecutive failures
-  uint32 last_attempt_ms = 5; // Timestamp of last connection attempt
+  uint32 last_attempt_s = 5; // Timestamp of last connection attempt in seconds
 }
 
 // Overall status of the multi-Wi-Fi orchestrator
