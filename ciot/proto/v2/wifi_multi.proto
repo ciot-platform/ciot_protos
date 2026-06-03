@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package Ciot;
+
+import "ciot/proto/v2/wifi.proto";
+import "ciot/proto/v2/tcp.proto";
+
+option csharp_namespace = "Ciot.Protos.V2";
+
+// Configuration for a single Wi-Fi network item in multi-connection mode
+message WifiMultiItemCfg {
+  string ssid = 1; // SSID of the Wi-Fi network.
+  string password = 2; // Password for the Wi-Fi network.
+  bool valid = 3; // Whether this network is valid and can be used
+}
+
+// Multi-Wi-Fi configuration containing a list of networks and policies
+message WifiMultiCfg {
+  repeated WifiMultiItemCfg items = 1; // List of Wi-Fi networks to cycle through
+  uint32 initial_index = 2; // Index of the network to try first
+  uint32 switch_interval_s = 3; // Interval in seconds for periodic network rotation
+  uint32 reconnect_attempts = 4; // Number of reconnection attempts per network
+}
+
+// Runtime status for a single Wi-Fi network item
+message WifiMultiItemStatus {
+  bool valid = 1; // Whether this item is currently valid/eligible
+  bool selected = 2; // Whether this item is currently selected/active
+  uint32 last_error = 3; // Last error code from this network
+  uint32 fail_count = 4; // Number of consecutive failures
+  uint32 last_attempt_s = 5; // Timestamp of last connection attempt in seconds
+}
+
+// Overall status of the multi-Wi-Fi orchestrator
+message WifiMultiStatus {
+  uint32 active_index = 1; // Index of currently active network (-1 if none)
+  uint32 valid_count = 2; // Number of valid networks available
+  uint32 last_error = 3; // Last global error code
+  uint64 next_switch_s = 4; // Timestamp for next scheduled switch attempt (seconds)
+  repeated WifiMultiItemStatus items = 5; // Status of each network item
+  Ciot.TcpStatus tcp = 6; // Status of the underlying TCP connection
+  bool started = 7; // Whether multi-Wi-Fi orchestrator is started
+}
+
+// Runtime information for multi-Wi-Fi, including active network details
+message WifiMultiInfo {
+  uint32 active_index = 1; // Index of currently active network
+  string active_ssid = 2; // SSID of active network (masked for privacy)
+  Ciot.WifiInfo active_wifi_info = 3; // Wi-Fi info from the active network
+  Ciot.TcpInfo tcp = 4; // TCP information from active connection
+}
+
+// Request to get the next available network
+message WifiMultiReqNext {}
+
+// Request to invalidate a specific network by index
+message WifiMultiReqSetInvalid {
+  uint32 index = 1; // Index of the network to invalidate
+  uint32 reason = 2; // Reason for invalidation (error code)
+}
+
+// Request to mark the currently active network as invalid
+message WifiMultiReqMarkActiveInvalid {
+  uint32 reason = 1; // Reason for invalidation (error code)
+}
+
+// Request to mark all networks as valid again
+message WifiMultiReqResetInvalid {}
+
+// Request to get information about a specific network
+message WifiMultiReqGetItem {
+  uint32 index = 1; // Index of the item to retrieve
+}
+
+// Request to set configuration for a specific network index in RAM only
+message WifiMultiReqSetItem {
+  uint32 index = 1; // Index of the item to configure
+  WifiMultiItemCfg config = 2; // Network configuration for the index
+}
+
+// Request information for multi-Wi-Fi operations
+message WifiMultiReq {
+  oneof type {
+    WifiMultiReqNext next = 1; // Switch to next available network
+    WifiMultiReqSetInvalid set_invalid = 2; // Mark network as invalid
+    WifiMultiReqMarkActiveInvalid mark_active_invalid = 3; // Mark active as invalid
+    WifiMultiReqResetInvalid reset_invalid = 4; // Reset invalidity flags
+    WifiMultiReqGetItem get_item = 5; // Get item information
+    WifiMultiReqSetItem set_item = 6; // Set item configuration in RAM only
+  }
+}
+
+// Stop multi-Wi-Fi orchestrator
+message WifiMultiStop {}
+
+// Multi-Wi-Fi data envelope containing configuration, status, information and requests
+message WifiMultiData {
+  oneof type {
+    WifiMultiStop stop = 1; // Stop multi-Wi-Fi orchestrator
+    WifiMultiCfg config = 2; // Full configuration written in RAM before start
+    WifiMultiStatus status = 3; // Status of multi-Wi-Fi orchestrator
+    WifiMultiReq request = 4; // Request to multi-Wi-Fi orchestrator
+    WifiMultiInfo info = 5; // Information about active network
+  }
+}
