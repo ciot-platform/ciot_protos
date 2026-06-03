@@ -45,6 +45,7 @@ message WifiStatus {
   uint32 disconnect_reason = 1; // Reason for Wi-Fi disconnection.
   Ciot.TcpStatus tcp = 2;       // Status of the TCP connection over Wi-Fi.
   WifiScanState scan_state = 3; // Wi-Fi scan state
+  int32 rssi = 4;               // Received Signal Strength Indicator (RSSI)
 }
 
 message WifiInfo {

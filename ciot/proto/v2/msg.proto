@@ -8,10 +8,30 @@ import "ciot/proto/v2/errors.proto";
 
 option csharp_namespace = "Ciot.Protos.V2";
 
+enum MsgType {
+  MSG_TYPE_REQUEST = 0;           // Request message.
+  MSG_TYPE_RESPONSE = 1;          // Response message.
+  MSG_TYPE_NOTIFICATION = 2;      // Notification message.
+}
+
+enum ProxyState {
+  PROXY_STATE_PENDING = 0;           // Proxy is pending. CIoT will send message using the proxy interface.
+  PROXY_STATE_READY_TO_PROCESS =  1; // Proxy is ready. CIoT will process the message locally.
+  PROXY_STATE_SENT = 2;              // Proxy is sent. CIoT will not process the message locally.
+}
+
+message Proxy {
+  IfaceInfo iface = 1;   // Proxy interface information.
+  ProxyState state = 2;  // Proxy state.
+  bool save = 3;         // Use ciot to save msg data
+}
+
 // Represents an CioT message
 message Msg {
   uint32 id = 1;                   // Message ID.
   IfaceInfo iface = 2;             // Interface information.
   Err error = 3;                   // Error code.
   MsgData data = 4;                // Message data.
+  MsgType type = 5;                // Message type.
+  optional Proxy proxy = 6;        // Proxy information.
 }

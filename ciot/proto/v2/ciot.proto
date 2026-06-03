@@ -44,6 +44,7 @@ message Req {
   oneof type {
     IfaceInfo save_cfg = 1;   // Save interface configuration
     IfaceInfo delete_cfg = 2; // Delete interface configuration
+
   }
 }
 

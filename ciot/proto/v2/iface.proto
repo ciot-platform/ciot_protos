@@ -40,6 +40,7 @@ enum IfaceType {
   IFACE_TYPE_MBUS_CLIENT = 25; // Modbus client interface type.
   IFACE_TYPE_MBUS_SERVER = 26; // Modbus server interface type.
   IFACE_TYPE_PWM = 27;         // PWM interface type.
+  IFACE_TYPE_WIFI_MULTI = 28;  // Multi-WiFi orchestrator interface type.
 }
 
 // Enum representing different states of the interface request.
