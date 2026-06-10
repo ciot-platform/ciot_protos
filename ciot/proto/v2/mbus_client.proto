@@ -43,6 +43,8 @@ message MbusClientCfg {
 message MbusClientStatus {
   MbusClientState state = 1; // State of the Modbus client.
   Err error = 2; // Modbus client error code.
+  uint32 requests_success = 3; // Number of successful requests
+  uint32 requests_error = 4; // Number of erroneous requests
 }
 
 // Message representing an Modbus client request.
