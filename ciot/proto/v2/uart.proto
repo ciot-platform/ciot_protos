@@ -33,6 +33,21 @@ enum UartError {
   UART_ERROR_UNKNOWN = 9;       // Unknown UART event error.
 }
 
+// Enum representing the number of data bits per UART frame.
+enum UartDataBits {
+  UART_DATA_BITS_8 = 0; // 8 data bits (default).
+  UART_DATA_BITS_7 = 1; // 7 data bits.
+  UART_DATA_BITS_6 = 2; // 6 data bits.
+  UART_DATA_BITS_5 = 3; // 5 data bits.
+}
+
+// Enum representing the number of stop bits per UART frame.
+enum UartStopBits {
+  UART_STOP_BITS_1 = 0;   // 1 stop bit (default).
+  UART_STOP_BITS_1_5 = 1; // 1.5 stop bits.
+  UART_STOP_BITS_2 = 2;   // 2 stop bits.
+}
+
 // Message used to stop uart interface
 message UartStop {}
 
@@ -54,6 +69,8 @@ message UartCfg {
   uint32 mode = 7;       // UART mode (used to enable rs485 mode on some mcus).
   uint32 read_timeout = 8;  // UART read timeout
   uint32 write_timeout = 9; // UART write timeout
+  UartDataBits data_bits = 10; // Data bits per frame.
+  UartStopBits stop_bits = 11; // Stop bits per frame.
 }
 
 // Message representing status for the UART module.
