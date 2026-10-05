@@ -11,7 +11,9 @@ enum GpioState {
   GPIO_STATE_BLINK = 2;    // Gpio is alternating it state once
   GPIO_STATE_BLINKED = 3;  // Gpio alternated it state once
   GPIO_STATE_BLINKING = 4; // Gpio is alternating it state
-  GPIO_STATE_ERROR = 5;    // Gpio is in error
+  GPIO_STATE_ERROR = 5;              // Gpio is in error
+  GPIO_STATE_BLINKING_REVERSE = 6;  // Gpio is alternating its state in reverse phase
+  GPIO_STATE_BLINKING_SLOW = 7;     // Gpio is alternating its state at half speed
 }
 
 // Enum representing gpio modes
