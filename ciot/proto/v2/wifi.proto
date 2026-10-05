@@ -38,6 +38,7 @@ message WifiCfg {
   string password = 3; // Password for the Wi-Fi network.
   WifiType type = 4;   // Type of Wi-Fi connection.
   Ciot.TcpCfg tcp = 5; // TCP configuration for Wi-Fi communication.
+  bool ssid_hidden = 6; // Hide SSID beacon when running in AP mode.
 }
 
 // Message representing status for the Wi-Fi interface.
